@@ -16,8 +16,6 @@
 .nav{
     display: grid;
     grid-template-columns: repeat(10, auto);
-
-
     justify-content: center;
     gap: 20px;
 }
@@ -28,4 +26,22 @@
     box-shadow: 0px 2px 10px chartreuse;
     font-family: 'Roboto Mono', monospace;
 }
+
+.paginate{
+    border:solid green 2px;
+    display: flex;
+    justify-content: center;
+}
+
+  
+  .paginate li {
+      flex-grow: 4;
+    display: flex;
+    justify-content: center;
+    }
+    .paginate a{
+        flex-grow: 4;
+        cursor: pointer;
+        border:solid red 2px;
+    }
 

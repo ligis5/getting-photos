@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
-import { Route, Link } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom';
 import './App.css';
-import {CardGroup} from './Components/card-group/Card-group'
-import {SearchBox} from './Components/search-box/search-box.component'
-import { createClient } from 'pexels';
+import {CardGroup} from './Components/card-group/Card-group';
+import {SearchBox} from './Components/search-box/search-box.component';
 import Particles from 'react-particles-js';
+import client from './client';
+import ReactPaginate from 'react-paginate';
 
 
-const client = createClient('***REMOVED***');
+
+
+
 
 const particlesOptions = {
   particles: {
@@ -58,15 +61,20 @@ class App extends Component {
     this.state = {
       search: '',
       photos: [],
-      query: 'space'
+      query: 'nature',
+      page: 1,
+      per_page: 21,
+      total_pages: []
     }
   }
+
   fetchData = async () => {
-    const {query} = this.state
+    const {query, page, per_page} = this.state
     try {
-      const responseSearch = await client.photos.search({ query,size: 'tiny' , per_page: 21 });
+      const responseSearch = await client.photos.search({ page, query, size: 'tiny' , per_page });
+      const pages = await Math.round(responseSearch.total_results / responseSearch.per_page) -1;
+      this.setState({total_pages: pages})
       const dataSearch = await responseSearch.photos;
-      console.log(responseSearch)
       this.setState({ photos: dataSearch })
       if (responseSearch.ok) {
         throw Error(responseSearch.statusText);
@@ -81,43 +89,61 @@ class App extends Component {
   }
   
   componentDidUpdate(prevProps, prevState) {
-    // have a condition to avoid infinite fetchData calls
     if (prevState.query !== this.state.query) {
+      this.fetchData();
+    }
+    if (prevState.page !== this.state.page) {
       this.fetchData();
     }
   }
  
- 
+  onChange = current_page => {
+    this.setState({
+      page: current_page.selected,
+    });
+  };
 
 render() {
-  const {photos, search, query} = this.state;
+  const {photos, search, total_pages} = this.state;
   const filteredImages = photos.filter( card =>
      card.photographer.toLowerCase().includes(search.toLowerCase() )
   ) 
   const homePage = () => (
     <div className='nav'>
       {categories.map(category => (
-         <button className={'nav-comp'} 
+         <button className='nav-comp'
          key={category} prop={category} 
          onClick={() => this.setState({query: category})} >
-         <Link to={'/' + category}>{category}</Link>
+         <Link style={{textDecoration: 'none'}} to={'/' + category}>{category}</Link>
          </button>
        ))}
     </div>
   )
   
       return (
+        <div>
       <div className="App">
       <Particles className ='particles'
        params={particlesOptions}
        />
-       <Route  path='/' component={homePage} />
+       <Route path='/' component={homePage} />
        <SearchBox  
           placeholder='search cards'
           handleChange={e => this.setState({search: e.target.value})}
         />
         <CardGroup cards={filteredImages} />
+        
       </div>
+      <ReactPaginate
+      containerClassName='paginate'
+      activeLinkClassName='paginate-a'
+      initialPage='1'
+        pageCount={total_pages}
+        pageRangeDisplayed='5'
+        marginPagesDisplayed='2'
+        onPageChange={this.onChange}
+      />
+        </div>
      );  
 }
 }
