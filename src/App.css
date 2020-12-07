@@ -28,20 +28,23 @@
 }
 
 .paginate{
-    border:solid green 2px;
     display: flex;
-    justify-content: center;
 }
 
   
   .paginate li {
+      color: rgb(0, 255, 208);
+      text-shadow: 1px 2px 5px chartreuse;
       flex-grow: 4;
     display: flex;
-    justify-content: center;
     }
     .paginate a{
+        font-size: 150%;
+        text-align:center;
         flex-grow: 4;
         cursor: pointer;
-        border:solid red 2px;
     }
-
+    .current{
+        font-size:160%;
+        font-weight: 500;
+    }
