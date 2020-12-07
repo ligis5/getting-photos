@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, BrowserRouter as Routing } from 'react-router-dom';
 import './App.css';
 import {CardGroup} from './Components/card-group/Card-group';
 import {SearchBox} from './Components/search-box/search-box.component';
@@ -43,7 +43,7 @@ const particlesOptions = {
   
 }
 const categories = [
-  'future',
+  'beautiful',
   'space',
   'art',
   "abstract",
@@ -99,16 +99,21 @@ class App extends Component {
  
   onChange = current_page => {
     this.setState({
-      page: current_page.selected,
+      page: current_page.selected+1,
     });
   };
 
+
 render() {
-  const {photos, search, total_pages} = this.state;
+  const {photos, search, total_pages, page, query} = this.state;
   const filteredImages = photos.filter( card =>
      card.photographer.toLowerCase().includes(search.toLowerCase() )
   ) 
-  const homePage = () => (
+
+  const homePage = props => {
+    console.log(props.location)
+  return(
+    
     <div className='nav'>
       {categories.map(category => (
          <button className='nav-comp'
@@ -118,10 +123,11 @@ render() {
          </button>
        ))}
     </div>
-  )
+  )}
+
+  
   
       return (
-        <div>
       <div className="App">
       <Particles className ='particles'
        params={particlesOptions}
@@ -131,19 +137,21 @@ render() {
           placeholder='search cards'
           handleChange={e => this.setState({search: e.target.value})}
         />
+        <Routing>
         <CardGroup cards={filteredImages} />
         
-      </div>
-      <ReactPaginate
+        <ReactPaginate
+        activeClassName='current'
       containerClassName='paginate'
       activeLinkClassName='paginate-a'
       initialPage='1'
         pageCount={total_pages}
-        pageRangeDisplayed='5'
-        marginPagesDisplayed='2'
+        pageRangeDisplayed='4'
+        marginPagesDisplayed='1'
         onPageChange={this.onChange}
       />
-        </div>
+      </Routing>
+      </div>
      );  
 }
 }
