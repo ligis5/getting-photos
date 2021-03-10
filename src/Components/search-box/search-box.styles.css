@@ -1,11 +1,14 @@
-
-.search{
+.searchForm {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.search {
   border: none;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   width: 50%;
   height: 2vh;
   text-align: center;
   background: rgb(0, 255, 208);
   box-shadow: 0px 2px 10px chartreuse;
-
 }

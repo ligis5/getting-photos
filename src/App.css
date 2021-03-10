@@ -1,50 +1,57 @@
-.App{
-    display: grid;
+.App {
+  display: grid;
 }
-.search{
-    justify-self: center;
+.topPart {
+  display: flex;
+  justify-content: space-between;
 }
-.particles{
-    
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: -1;
+.search {
+  justify-self: center;
 }
-.nav{
-    display: grid;
-    grid-template-columns: repeat(10, auto);
-    justify-content: center;
-    gap: 20px;
+.particles {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
 }
-.nav-comp{
-    font-size: 120%;
-    background: rgb(0, 255, 208);
-    border: none;
-    box-shadow: 0px 2px 10px chartreuse;
-    font-family: 'Roboto Mono', monospace;
+.onOff {
+  width: max-content;
+}
+.categories {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  justify-content: center;
+  gap: 20px;
+}
+.categories-comp {
+  font-size: 120%;
+  cursor: pointer;
+  background: rgb(0, 255, 208);
+  border: none;
+  box-shadow: 0px 2px 10px chartreuse;
+  font-family: "Roboto Mono", monospace;
 }
 
-.paginate{
-    display: flex;
+.paginate {
+  display: flex;
 }
 
-  
-  .paginate li {
-      color: rgb(0, 255, 208);
-      text-shadow: 1px 2px 5px chartreuse;
-      flex-grow: 4;
-    display: flex;
-    }
-    .paginate a{
-        font-size: 150%;
-        text-align:center;
-        flex-grow: 4;
-        cursor: pointer;
-    }
-    .current{
-        font-size:160%;
-        font-weight: 500;
-    }
+.paginate li {
+  color: rgb(0, 255, 208);
+  text-shadow: 1px 2px 5px chartreuse;
+  flex-grow: 4;
+  display: flex;
+}
+.paginate a {
+  font-size: 150%;
+  text-align: center;
+  flex-grow: 4;
+  cursor: pointer;
+}
+.current {
+  font-size: 160%;
+  font-weight: 500;
+}

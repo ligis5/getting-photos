@@ -1,14 +1,23 @@
-import React from 'react'
-import './search-box.styles.css'
+import React, {useRef} from "react";
+import "./search-box.styles.css";
 
-export const SearchBox = ({ placeholder, handleChange }) => (
-        <input 
-        className='search'
-        type='search' 
-        placeholder={placeholder} 
-        onChange={handleChange}
-        />
-       
-      
-);
+ const SearchBox = ({ chooseCategory }) => {
+   const categoryRef = useRef();
+   const submitNewCategory = (e) => {
+     e.preventDefault();
+    chooseCategory(categoryRef.current.value)
+   }
+  return (
+  <form className="searchForm" onSubmit={e => submitNewCategory(e)}>
+    <input
+    className="search"
+    type="search"
+    placeholder="search cards"
+    ref={categoryRef}
+  />
+  </form>
+)
+  }
 
+
+  export default SearchBox
