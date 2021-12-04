@@ -12,7 +12,7 @@
     "react-dom": "^16.13.1",
     "react-paginate": "^6.5.0",
     "react-particles-js": "^3.4.1",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.0.2",
     "react-scripts": "^4.0.0",
     "react-switch": "^6.0.0"
   },

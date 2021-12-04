@@ -1,7 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link  } from "react-router-dom";
 
-const Categories = ({ chooseCategory }) => {
+const Categories = () => {
   const categories = [
     "beautiful",
     "space",
@@ -14,22 +14,16 @@ const Categories = ({ chooseCategory }) => {
     "dark",
     "minimalistic",
   ];
-  const history = useHistory();
-  const x = (category) => {
-    chooseCategory(category);
-    history.push(`/${category}`);
-  };
   return (
     <div className="categories">
       {categories.map((category) => (
-        <button
+        <Link
           className="categories-comp"
           key={category}
-          prop={category}
-          onClick={() => x(category)}
+          to={`/${category}/1`}
         >
           {category}
-        </button>
+        </Link>
       ))}
     </div>
   );

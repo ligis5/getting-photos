@@ -1,19 +1,20 @@
 .inner-card {
-  width: min-content;
+  width: 80%;
+  /* min-width: 350px; */
   display: grid;
   text-align: center;
   font-family: "Roboto Mono", monospace;
   color: brown;
-  align-content: end;
   margin-top: 50px;
 }
 .inner-img {
-  width: 400px;
+  width: 100%;
   justify-self: center;
   border: 2px solid cyan;
   border-radius: 10%;
   box-shadow: 0px 0px 20px 10px rgb(24, 12, 12);
   height: auto;
+  min-height: 500px;
   cursor: pointer;
 }
 a {
@@ -28,9 +29,12 @@ a {
   visibility: visible;
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1000px) {
   .h3-css {
     font-size: 150%;
+  }
+  .inner-card{
+    width: 90%;
   }
 }
 @media only screen and (max-width: 600px) {

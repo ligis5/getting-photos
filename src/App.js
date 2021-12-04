@@ -1,77 +1,53 @@
-import React, { useState, useEffect } from "react";
-import { Route, useHistory } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import {Routes, Route, useLocation, useNavigate, useParams, Outlet} from "react-router-dom";
+
 import "./App.css";
 import { CardGroup } from "./Components/card-group/Card-group";
 import SearchBox from "./Components/search-box/search-box.component";
 import Particles from "react-particles-js";
-import client from "./client";
+
 import ReactPaginate from "react-paginate";
 import { particlesOptions } from "./partickle.options";
 import Categories from "./Components/Categories";
 import Switch from "react-switch";
+import usePhotos from "./usePhotos";
 
 const App = () => {
-  const [photos, setPhotos] = useState([]);
-  const [query, setQuery] = useState("nature");
-  const [page, setPage] = useState(1);
-  const [total_pages, setTotal_pages] = useState([]);
   const [checked, setChecked] = useState(false);
-  const history = useHistory();
-  const chooseCategory = (category) => {
-    setQuery(category);
-  };
-
-  const fetchData = async () => {
-    try {
-      const per_page = 27;
-      const responseSearch = await client.photos.search({
-        page,
-        query,
-        per_page,
-      });
-      const pages =
-        (await Math.round(
-          responseSearch.total_results / responseSearch.per_page
-        )) - 1;
-      setTotal_pages(pages);
-      const dataSearch = await responseSearch.photos;
-      setPhotos(dataSearch);
-      if (responseSearch.ok) {
-        throw Error(responseSearch.statusText);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    history.push(`/${query}/${page}`);
-    fetchData();
-  }, [page, query]);
-
+  const [p, setP] = useState(1);
+  const [loaded, setLoaded] = useState(false);
+  const appRef = useRef();
+  const navigate = useNavigate();
+  const {photos,query, page, total_pages} = usePhotos({p});
   const onChange = (current_page) => {
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 1000);
 
-    setPage(current_page.selected + 1);
+    setP(current_page.selected + 1);
+    navigate(`/${query}/${page}`, { page:page });
   };
 
   const handleChange = (nextChecked) => {
     setChecked(nextChecked);
   };
 
+  useEffect(() => {
+    if(appRef) setLoaded(true)
+    return () => {
+      setLoaded(false);
+    }
+  }, [appRef])
+
   return (
-    <div className="App">
-      {checked ? (
-        <Particles className="particles" params={particlesOptions} />
-      ) : (
-        <></>
-      )}
-      <Route path="/:category/:page">
-        <div className="topPart">
-          <Categories chooseCategory={chooseCategory} />
-          <div className="onOff">
+    
+    <Routes>
+    <Route path='/' element={<div className="App" ref={appRef}>
+      <div className="topPart">
+          <Categories />
+        </div>
+    <SearchBox />
+    <div className="onOff">
             <Switch
               checked={checked}
               onChange={handleChange}
@@ -88,9 +64,14 @@ const App = () => {
               id="material-switch"
             />
           </div>
-        </div>
-        <SearchBox chooseCategory={chooseCategory} />
-        <CardGroup cards={photos} />
+      {checked ? (
+        <Particles className="particles" params={particlesOptions} />
+      ) : (
+        <></>
+      )}
+      
+      <Outlet/>
+      
         <ReactPaginate
           activeClassName="current"
           containerClassName="paginate"
@@ -100,8 +81,11 @@ const App = () => {
           marginPagesDisplayed="1"
           onPageChange={onChange}
         />
+        
+    </div>}>
+    <Route path='/:id/:page' element={<CardGroup cards={photos}/>}/>
       </Route>
-    </div>
+    </Routes>
   );
 };
 

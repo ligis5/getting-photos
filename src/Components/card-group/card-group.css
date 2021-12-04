@@ -1,8 +1,18 @@
 .card-group {
   display: grid;
+  width: 100vw;
   justify-items: center;
   justify-content: space-evenly;
-  grid-template-columns: repeat(3, 400px);
-  grid-gap: 1.5rem;
+  grid-template-columns: repeat(3, auto);
   grid-auto-flow: row;
+}
+@media only screen and (max-width: 1000px) {
+  .card-group{
+    grid-template-columns: repeat(2, auto);
+  }
+}
+@media only screen and (max-width: 500px) {
+  .card-group{
+    grid-template-columns: repeat(1, auto);
+  }
 }

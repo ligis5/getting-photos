@@ -1,4 +1,7 @@
-
+*{
+  margin: 0;
+  padding: 0;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,16 +13,7 @@ body {
   background-position: center;
   background-attachment: fixed;
 }
-body::-webkit-scrollbar{
-  width: 0.25rem;
-}
-body::-webkit-scrollbar-track{
-  background: brown;
-}
-body::-webkit-scrollbar-thumb{
-  background: aquamarine;
 
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
