@@ -9,7 +9,7 @@ const usePhotos = ({p}) => {
   const [page, setPage] = useState(p);
   const [total_pages, setTotal_pages] = useState([]);
   const navigate = useNavigate();
-  const client = createClient('***REMOVED***');
+  const client = createClient('your pexels Api key');
   const fetchData = async () => {
     try {
       const per_page = 27;
