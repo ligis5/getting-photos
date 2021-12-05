@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {Routes, Route, useLocation, useNavigate, useParams, Outlet} from "react-router-dom";
+import {Routes, Route, useLocation, useParams, Outlet} from "react-router-dom";
 
 import "./App.css";
 import { CardGroup } from "./Components/card-group/Card-group";
@@ -15,39 +15,29 @@ import usePhotos from "./usePhotos";
 const App = () => {
   const [checked, setChecked] = useState(false);
   const [p, setP] = useState(1);
-  const [loaded, setLoaded] = useState(false);
-  const appRef = useRef();
-  const navigate = useNavigate();
+  const topRef = useRef();
   const {photos,query, page, total_pages} = usePhotos({p});
   const onChange = (current_page) => {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 1000);
+    // setTimeout(() => {
+      topRef.current.scrollIntoView();
+    // }, 1000);
 
     setP(current_page.selected + 1);
-    navigate(`/${query}/${page}`, { page:page });
   };
 
   const handleChange = (nextChecked) => {
     setChecked(nextChecked);
   };
 
-  useEffect(() => {
-    if(appRef) setLoaded(true)
-    return () => {
-      setLoaded(false);
-    }
-  }, [appRef])
-
   return (
     
     <Routes>
-    <Route path='/' element={<div className="App" ref={appRef}>
-      <div className="topPart">
+    <Route path='/' element={<div className="App">
+      <div className="topPart" ref={topRef}>
           <Categories />
         </div>
     <SearchBox />
-    <div className="onOff">
+    <div className="onOff" >
             <Switch
               checked={checked}
               onChange={handleChange}

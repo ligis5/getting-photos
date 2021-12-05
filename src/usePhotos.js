@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createClient } from 'pexels';
 
@@ -8,6 +8,7 @@ const usePhotos = ({p}) => {
   const [query, setQuery] = useState(location.state ? location.state : 'nature');
   const [page, setPage] = useState(p);
   const [total_pages, setTotal_pages] = useState([]);
+  const navigate = useNavigate();
   const client = createClient('***REMOVED***');
   const fetchData = async () => {
     try {
@@ -40,6 +41,7 @@ const usePhotos = ({p}) => {
   useEffect(() => {
     if(p && !isNaN(p)){
       setPage(p)
+      navigate(`/${query}/${p}`, { page:p });
     }
   }, [p])
   useEffect(() => {
